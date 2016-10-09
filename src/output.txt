@@ -1,0 +1,17 @@
+CLUSTAL O(1.2.3) multiple sequence alignment
+
+
+tr|A0A0B5JW41|A0A0B5JW41_DANRE      ---MEASVGVCVVFVLAL-LGLGSAIKCYNCKDYTGACSRIKDCYYDDACLSVYERGGDT
+sp|P13987|CD59_HUMAN                MGIQGGSVLFGLLLVLAVFCHSGHSLQCYNCPNPTADCKTAVNCSSDFDACLITKAGLQV
+sp|P27274|CD59_RAT                  ---MRARRGFILLLLLAVLCSTGVSLRCYNCLDPVSSCKTNSTCSPNLDACLVAVSGKQV
+                                         .   . ::::**:    * :::**** : .. *.    *  :  .  :   * :.
+
+tr|A0A0B5JW41|A0A0B5JW41_DANRE      YRQCIKYSECDYSTVGVKFPKLSSFKFSCCTSDLCN------------------------
+sp|P13987|CD59_HUMAN                YNKCWKFEHCNFNDVTTRL-RENELTYYCCKKDLCNF--NEQLENGGTSLSEKTVLLLVT
+sp|P27274|CD59_RAT                  YQQCWRFSDCNAKFILSRL-EIANVQYRCCQADLCNKSFEDKPNNGAISLLGKTALLVTS
+                                    *.:* ::..*: . :  :: .  .. : **  ****                        
+
+tr|A0A0B5JW41|A0A0B5JW41_DANRE      -------------
+sp|P13987|CD59_HUMAN                PFLAAAWSLHP--
+sp|P27274|CD59_RAT                  V-LAA--ILKPCF
+                                                 x1
