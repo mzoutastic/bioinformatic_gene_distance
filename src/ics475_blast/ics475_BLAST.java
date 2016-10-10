@@ -21,17 +21,9 @@ public class ics475_BLAST {
 
     String input_sequence;
 
-    public ics475_BLAST() {
-
-    }
-
-    public ics475_BLAST(String item) {
-        input_sequence = item;
-    }
-
     public static void main(String[] args) {
         ics475_BLAST var = new ics475_BLAST();
-        String pwd = "/Users/mzou/NetBeansProjects/ics475_BLAST/src/output.txt";
+        String pwd = "/Users/mzou/NetBeansProjects/ics475_BLAST/src/ics475_a2.txt";
         List<ArrayList<String>> list = var.getSequences(pwd);
         ArrayList<String> sequences;
         sequences = list.get(0);
@@ -39,6 +31,7 @@ public class ics475_BLAST {
         String filtered, line = "";
         int distance;
         String output;
+        ArrayList<String> results = new ArrayList<String>();
         ArrayList<String> compareSequences = new ArrayList<String>();
         for (int i = 0; i < list.size(); i++) { //DO NOT DELETE
             //for(int i = 0; i < 1; i++){
@@ -46,56 +39,36 @@ public class ics475_BLAST {
             for (int a = 0; a < sequences.size() - 1; a++) {
                 for (int b = a + 1; b < sequences.size(); b++) {
                     output = var.compareSequences(sequences.get(a), sequences.get(b));
+                    results.add(output);
                     System.out.println(output);
                 }
             }
-
-//            for(int j =0; j < sequences.size(); j++){
-//                line = sequences.get(j);
-//                filtered = var.filterSequences(line);
-//                compareSequences.add(filtered);
-//            }
-//            //System.out.println(compareSequences.size());
-//            for(int a = 0; a < compareSequences.size() -1; a++){
-//                //System.out.println("a: "+compareSequences.get(a));
-//                for(int b = a + 1; b < compareSequences.size(); b++){
-//                    //System.out.println("b: " + compareSequences.get(b));
-//                    distance = var.compareSequences(compareSequences.get(a), compareSequences.get(b));
-//                    //System.out.println(distance);
-//                    System.out.println("Comparing: "+compareSequences.get(a) + " with " + compareSequences.get(b)
-//                            + ", result distance: "+ distance);
-//                }
-//            }
             compareSequences = new ArrayList<String>();
             System.out.println();
         }
+        System.out.println(results.size());
+        var.answers(results);
     }
-
-//    private Map<String, String> getType(String line){
-//        char[] ca = line.toCharArray();
-//        int i = 0;
-//        char currentChar;
-//        boolean bool = true;
-//        String prefix = "";
-//        String sequences = "";
-//        Map<String, String> m = new HashMap<String, String>();
-//        while(bool){
-//            currentChar = line.charAt(i);
-//            if(currentChar != ' '){
-//                prefix += String.valueOf(line.charAt(i));
-//            } if(currentChar == ' '){
-//                for(int j = i; j < line.length(); j++){
-//                    if(line.charAt(j) == ' '){
-//                        j++;
-//                    } else{
-//                        sequences += String.valueOf(line.charAt(j));
-//                    }
-//                }
-//                bool = false;
-//            }
-//        }
-//        return Map<prefix, sequences>;
-//    }
+    
+    private String answers(ArrayList<String> al){
+        boolean bool;
+        String temp;
+        char[] ca;
+        String result_str = "";
+        ArrayList<String> list = new ArrayList<String>();
+        int distance_result;
+        char currentChar;
+        int j;
+        //Get smallest distance
+        for(int i = 0; i < al.size(); i++){
+            temp = al.get(i);
+            //now parse the distance out of 
+            System.out.println(al.get(i));
+            
+        }
+        return null;
+    }
+    
     private String compareSequences(String a, String b) {
         char[] ar_a;
         char[] ar_b;
@@ -142,6 +115,7 @@ public class ics475_BLAST {
                 bool = false;
             }
         }
+        
         //System.out.println("loop stopped");
         ar_a = seq_a.toCharArray();
         ar_b = seq_b.toCharArray();
