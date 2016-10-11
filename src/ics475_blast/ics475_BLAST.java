@@ -63,7 +63,7 @@ public class ics475_BLAST {
         for(int i = 0; i < al.size(); i++){
             temp = al.get(i);
             //now parse the distance out of 
-            System.out.println(al.get(i));
+            //System.out.println(al.get(i));
             
         }
         return null;
@@ -178,9 +178,10 @@ public class ics475_BLAST {
                     } else if (line.contains("*") || line.contains("x1")) {
                         list.add(str_array);
                         str_array = new ArrayList<String>();
-                    }
-                }
+                    } 
+                } 
             }
+            list.add(str_array);
             br.close();
             return list;
         } catch (IOException e) {
