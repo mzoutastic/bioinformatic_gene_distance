@@ -25,33 +25,72 @@ public class ics475_BLAST {
         ics475_BLAST var = new ics475_BLAST();
         String pwd = "/Users/mzou/NetBeansProjects/ics475_BLAST/src/ics475_a2.txt";
         List<ArrayList<String>> list = var.getSequences(pwd);
+        int countLines = var.getSequencesCount(pwd);
+        //System.out.println(countLines);
         ArrayList<String> sequences;
         sequences = list.get(0);
         String[] str = new String[sequences.size()];
         String filtered, line = "";
         int distance = -1;
         String output;
+        String ignore = "";
+        ArrayList<String> as = new ArrayList<String>();
+        String tempp = "";
+        char[] cr;
         ArrayList<String> results = new ArrayList<String>();
         ArrayList<String> compareSequences = new ArrayList<String>();
-        for (int i = 0; i < list.size(); i++) { //DO NOT DELETE
-            //for(int i = 0; i < 1; i++){
-            sequences = list.get(i);
-            for (int a = 0; a < sequences.size() - 1; a++) {
-                for (int b = a + 1; b < sequences.size(); b++) {
-                    output = var.compareSequences(sequences.get(a), sequences.get(b));
-                    results.add(output);
-                    System.out.println(output);
-                }
-            }
-            compareSequences = new ArrayList<String>();
-            System.out.println();
+        List<ArrayList<String>> arr = new ArrayList<ArrayList<String>>();
+        String[] full = new String[countLines];
+        sequences = list.get(0);
+        for(int j = 0; j < countLines; j++){
+            full[j]=sequences.get(j);
         }
-        //System.out.println(results.size());
+        
+        for(int i = 1; i < list.size() ;i++){
+            sequences = list.get(i);
+            for(int j = 0; j < sequences.size() ; j++){
+                full[j] += var.filterSequences(sequences.get(j));
+            }
+        }
+        
+        for(int j = 0; j < countLines ; j++){
+            //System.out.println(full[j]);
+        }
+        
+        for(int i = 0; i < full.length -1; i++){
+            for(int j = i + 1; j < full.length; j++){
+                output = var.compareSequences(full[i], full[j]);
+                System.out.println(output);
+                results.add(output);
+            }
+        }
+        //var.fixUp(arr);
         var.answers(results);
+        
+//        for (int i = 0; i < list.size(); i++) { 
+//            sequences = list.get(i);
+//            for (int a = 0; a < sequences.size() - 1; a++) {
+//                for (int b = a + 1; b < sequences.size(); b++) {
+//                    output = var.compareSequences(sequences.get(a), sequences.get(b));
+//                    results.add(output);
+//                    //System.out.println(output);
+//                }
+//                arr.add(results);
+//            }
+//            compareSequences = new ArrayList<String>();
+//            //System.out.println();
+//        }
+        //var.fixUp(arr);
+//        var.answers(results);
+    }
+    
+    private void fixUp(List<ArrayList<String>> arr){
+        //System.out.println(result.size());
+        //System.out.println(arr.get(0).size());
+        
     }
     
     private void answers(ArrayList<String> al){
-        //Find Smallest Distnace Pair
         boolean bool;
         String temp;
         char[] ca;
@@ -60,7 +99,6 @@ public class ics475_BLAST {
         int distance = 0;
         int smallest_distance;
         String ignore = "";
-        //Get smallest distance
         for(int i = 0; i < al.size(); i++){
             temp = al.get(i);
             ca = temp.toCharArray();
@@ -91,12 +129,6 @@ public class ics475_BLAST {
                 smallest_distance = list.get(i);
             }
         }
-        
-        //Find Cloest Distance to Human
-        //Filter the string contains human
-        //Do whatever above to get the number
-        //Compare the number to get the lowest score
-        //Get to index, reverse engineer to find the string
         ArrayList<String> filtered = new ArrayList<String>();
         ArrayList<Integer> human_distance2 = new ArrayList<Integer>();
         int human_distance = -1;
@@ -112,7 +144,6 @@ public class ics475_BLAST {
                 filtered.add(al.get(i));
             }
         }
-        //System.out.println(filtered.size());
         for(int i = 0; i < filtered.size(); i++){
             temp = filtered.get(i);
             ca = temp.toCharArray();
@@ -137,10 +168,6 @@ public class ics475_BLAST {
                 }
             } 
         }
-        //System.out.println(human_distance2.size());
-        //for(int i = 0; i < human_distance2.size(); i ++){
-        //    System.out.println(human_distance2.get(i));
-        //}
         human_smallest_distance = human_distance2.get(0);
         index = 0;
         for(int i = 1; i < human_distance2.size() - 1; i++){
@@ -150,9 +177,6 @@ public class ics475_BLAST {
             }
         }
         temp3 = filtered.get(index);
-        //System.out.println(human_smallest_distance);
-        //System.out.println("index = " + index);
-        //System.out.println(temp3);
         organism[0] = "";
         organism[1] = "";
         ca2 = temp3.toCharArray();
@@ -173,9 +197,6 @@ public class ics475_BLAST {
         StringBuilder sb = new StringBuilder();
         String output_org = "";
         sb.append(organism[1]);
-//        System.out.println(sb.toString());
-//        System.out.println(organism[1].length());
-//        System.out.println(organism[1].indexOf(")"));
         if(organism[1].contains(")")){
             ca3 = organism[1].toCharArray();
             for(int i = organism[1].indexOf(")"); i < ca3.length; i++){
@@ -189,7 +210,7 @@ public class ics475_BLAST {
          if(!organism[1].toLowerCase().contains("human")){
             output_org = organism[1];
         } 
-        System.out.println("Smallest Distance: "+smallest_distance);
+        System.out.println("Smallest Distancse: "+smallest_distance);
         System.out.println("Closest to Human is " + output_org);
     }
     
@@ -202,7 +223,6 @@ public class ics475_BLAST {
         boolean bool = true;
         int i = 0;
         while (bool) {
-            //System.out.println("looping a");
             currentChar = a.charAt(i);
             if (currentChar != ' ') {
                 prefix_a += String.valueOf(a.charAt(i));
@@ -222,7 +242,6 @@ public class ics475_BLAST {
         bool = true;
         i = 0;
         while (bool) {
-            //System.out.println("looping b");
             currentChar = b.charAt(i);
             if (currentChar != ' ') {
                 prefix_b += String.valueOf(b.charAt(i));
@@ -239,12 +258,8 @@ public class ics475_BLAST {
                 bool = false;
             }
         }
-        
-        //System.out.println("loop stopped");
         ar_a = seq_a.toCharArray();
         ar_b = seq_b.toCharArray();
-        //System.out.println(ar_a);
-        //System.out.println(ar_b);
         if(ar_a.length != ar_b.length){
             return "Sequence length is not the same!";
         } else {
@@ -313,5 +328,31 @@ public class ics475_BLAST {
         }
         return null;
     }
-
+    
+    private int getSequencesCount(String url) {
+        BufferedReader br;
+        List<ArrayList<String>> list;
+        String line = "";
+        ArrayList<String> str_array = new ArrayList<String>();
+        char[] char_array;
+        boolean bool = true;
+        int count = 0;
+        try {
+            br = new BufferedReader(new FileReader(url));
+            list = new ArrayList<ArrayList<String>>();
+            while (bool) {
+                line = br.readLine();
+                if(!line.contains("*")){
+                    count++;
+                } else{
+                    bool = false;
+                }
+            }
+            return count-3;
+        } catch (IOException e) {
+            System.out.println("ERROR: File path does not exist!");
+        }
+        return -1;
+    }
+    
 }
