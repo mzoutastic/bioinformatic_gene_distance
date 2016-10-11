@@ -29,7 +29,7 @@ public class ics475_BLAST {
         sequences = list.get(0);
         String[] str = new String[sequences.size()];
         String filtered, line = "";
-        int distance;
+        int distance = -1;
         String output;
         ArrayList<String> results = new ArrayList<String>();
         ArrayList<String> compareSequences = new ArrayList<String>();
@@ -46,27 +46,151 @@ public class ics475_BLAST {
             compareSequences = new ArrayList<String>();
             System.out.println();
         }
-        System.out.println(results.size());
+        //System.out.println(results.size());
         var.answers(results);
     }
     
-    private String answers(ArrayList<String> al){
+    private void answers(ArrayList<String> al){
+        //Find Smallest Distnace Pair
         boolean bool;
         String temp;
         char[] ca;
         String result_str = "";
-        ArrayList<String> list = new ArrayList<String>();
-        int distance_result;
-        char currentChar;
-        int j;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        int distance = 0;
+        int smallest_distance;
+        String ignore = "";
         //Get smallest distance
         for(int i = 0; i < al.size(); i++){
             temp = al.get(i);
-            //now parse the distance out of 
-            //System.out.println(al.get(i));
-            
+            ca = temp.toCharArray();
+            bool = true;
+            while(bool){
+                for(int j = 0; j < ca.length; j++){
+                    if(ca[j] != '='){
+                        ignore += ca[j];
+                    } else{
+                        for(int k = j; k < ca.length; k++){
+                            if(ca[k] == ' ' || ca[k] == '='){
+                                ignore += ca[k];
+                            } else{
+                                result_str += ca[k];
+                                distance = Integer.parseInt(result_str);
+                            }
+                        }
+                        list.add(distance);
+                        result_str = "";
+                        bool = false;
+                    }
+                }
+            } 
         }
-        return null;
+        smallest_distance = list.get(0);
+        for(int i = 1; i < list.size() - 1; i++){
+            if(list.get(i) < smallest_distance){
+                smallest_distance = list.get(i);
+            }
+        }
+        
+        //Find Cloest Distance to Human
+        //Filter the string contains human
+        //Do whatever above to get the number
+        //Compare the number to get the lowest score
+        //Get to index, reverse engineer to find the string
+        ArrayList<String> filtered = new ArrayList<String>();
+        ArrayList<Integer> human_distance2 = new ArrayList<Integer>();
+        int human_distance = -1;
+        int human_smallest_distance = -1;
+        int index;
+        String temp3;
+        String[] organism = new String[2];
+        int temp4 = 0;
+        char[] ca2;
+        char[] ca3;
+        for(int i = 0; i < al.size(); i++){
+            if(al.get(i).toLowerCase().contains("human")){
+                filtered.add(al.get(i));
+            }
+        }
+        //System.out.println(filtered.size());
+        for(int i = 0; i < filtered.size(); i++){
+            temp = filtered.get(i);
+            ca = temp.toCharArray();
+            bool = true;
+            while(bool){
+                for(int j = 0; j < ca.length; j++){
+                    if(ca[j] != '='){
+                        ignore += ca[j];
+                    } else{
+                        for(int k = j; k < ca.length; k++){
+                            if(ca[k] == ' ' || ca[k] == '='){
+                                ignore += ca[k];
+                            } else{
+                                result_str += ca[k];
+                                human_distance = Integer.parseInt(result_str);
+                            }
+                        }
+                        human_distance2.add(human_distance);
+                        result_str = "";
+                        bool = false;
+                    }
+                }
+            } 
+        }
+        //System.out.println(human_distance2.size());
+        //for(int i = 0; i < human_distance2.size(); i ++){
+        //    System.out.println(human_distance2.get(i));
+        //}
+        human_smallest_distance = human_distance2.get(0);
+        index = 0;
+        for(int i = 1; i < human_distance2.size() - 1; i++){
+            if(human_distance2.get(i) < human_smallest_distance){
+                human_smallest_distance = human_distance2.get(i);
+                index = i;
+            }
+        }
+        temp3 = filtered.get(index);
+        //System.out.println(human_smallest_distance);
+        //System.out.println("index = " + index);
+        //System.out.println(temp3);
+        organism[0] = "";
+        organism[1] = "";
+        ca2 = temp3.toCharArray();
+        for(int i = 0; i < ca2.length; i++){
+            if(ca2[i] != '_'){
+                ignore += ca2[i];
+            } else {
+                for(int j = i + 1; j < ca2.length; j++){
+                    if(ca2[j] != ','){
+                        organism[temp4] += ca2[j];
+                    } else {
+                        temp4 += 1;
+                        break;
+                    }
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        String output_org = "";
+        sb.append(organism[1]);
+//        System.out.println(sb.toString());
+//        System.out.println(organism[1].length());
+//        System.out.println(organism[1].indexOf(")"));
+        if(organism[1].contains(")")){
+            ca3 = organism[1].toCharArray();
+            for(int i = organism[1].indexOf(")"); i < ca3.length; i++){
+                sb.deleteCharAt(organism[1].indexOf(")"));
+            }
+            organism[1] = sb.toString();
+        }
+        if(!organism[0].toLowerCase().contains("human")){
+            output_org = organism[0];
+        } 
+         if(!organism[1].toLowerCase().contains("human")){
+            output_org = organism[1];
+        } 
+        System.out.println("Smallest Distance: "+smallest_distance);
+        System.out.println("Closest to Human is " + output_org);
     }
     
     private String compareSequences(String a, String b) {
